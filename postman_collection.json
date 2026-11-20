@@ -1,0 +1,85 @@
+{
+  "info": {
+    "name": "CyberGuard REST API v1",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://127.0.0.1:5000/api/v1" },
+    { "key": "api_key", "value": "cyberguard-secret-key-123" }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/health"
+      }
+    },
+    {
+      "name": "Get All Assets (Filter & Pagination)",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/assets?criticality=Critical&page=1&limit=5"
+      }
+    },
+    {
+      "name": "Create Asset",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "X-API-Key", "value": "{{api_key}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"owner_id\": 1,\n  \"asset_name\": \"Server E-Learning\",\n  \"asset_type\": \"Web Server\",\n  \"ip_address\": \"192.168.10.50\",\n  \"criticality\": \"High\"\n}"
+        },
+        "url": "{{base_url}}/assets"
+      }
+    },
+    {
+      "name": "Get All Incidents (Search & Sort)",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/incidents?search=Brute&sort=desc"
+      }
+    },
+    {
+      "name": "Create Incident",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "X-API-Key", "value": "{{api_key}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"asset_id\": 1,\n  \"reporter_id\": 2,\n  \"title\": \"Anomali Trafik DDoS UDP Flood\",\n  \"incident_type\": \"DDoS\",\n  \"severity\": \"Critical\",\n  \"description\": \"Lonjakan trafik masuk sebesar 8 Gbps pada port 443.\"\n}"
+        },
+        "url": "{{base_url}}/incidents"
+      }
+    },
+    {
+      "name": "Get Incident Detail & Logs",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/incidents/1"
+      }
+    },
+    {
+      "name": "Add Incident Log",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "X-API-Key", "value": "{{api_key}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"analyst_id\": 2,\n  \"action_taken\": \"Mengaktifkan mitigasi scrubbing DDoS pada ISP.\"\n}"
+        },
+        "url": "{{base_url}}/incidents/1/logs"
+      }
+    }
+  ]
+}
