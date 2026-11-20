@@ -4,3 +4,4 @@ Flask-Migrate==4.0.7
 marshmallow==3.21.3
 python-dotenv==1.0.1
 pytest==8.3.2
+gunicorn==21.2.0
